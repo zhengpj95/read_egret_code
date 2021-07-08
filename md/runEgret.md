@@ -6,7 +6,7 @@
 
 在index.html文件里，有一个顶级的 div 组件，这就是我们游戏的界面。
 
-```tsx
+```HTML
 <div style="margin: auto;width: 100%;height: 100%;" 
      class="egret-player"
      data-entry-class="Main"
@@ -39,7 +39,7 @@
 
 在index.html文件中还有一段javascript代码，其功能就是加载 manifest.json 文件，并把其中配置的 js 文件加载到浏览器中。等 manifest.json 中的全部 js 文件加载完毕，开始运行 egret.runEgret，开始游戏创建和加载。
 
-```tsx
+```js
 //egret工程入口函数
 egret.runEgret({
   renderMode: "webgl", 
@@ -69,7 +69,7 @@ egret.runEgret({
 
 启动心跳计时器。startTicker(egret.ticker)
 
-```html
+```tsx
 function startTicker(ticker: egret.sys.SystemTicker): void {
 //使用浏览器默认的定时器
         let requestAnimationFrame =
@@ -97,7 +97,7 @@ function startTicker(ticker: egret.sys.SystemTicker): void {
 
 创建屏幕适配器实例 egret.sys.screenAdapter
 
-```html
+```tsx
 if (options.screenAdapter) {
 egret.sys.screenAdapter = options.screenAdapter;
 } else if (!egret.sys.screenAdapter) {
@@ -107,7 +107,7 @@ egret.sys.screenAdapter = options.screenAdapter;
 
 创建WebPlayer
 
-```html
+```tsx
 let list = document.querySelectorAll(".egret-player");
 let length = list.length;
 for (let i = 0; i < length; i++) {
@@ -119,7 +119,7 @@ let player = new WebPlayer(container, options);//创建webplayer
 
 监听window对象的resize，如果窗口大小有变化，那么就延时300毫秒刷新屏幕显示
 
-```html
+```tsx
 let resizeTimer: number = NaN;
 function doResize() {
         resizeTimer = NaN;
@@ -151,7 +151,7 @@ function updateAllScreens(): void {
 
 新建一个WebPlayer播放器，把index.html中的div，以及创建参数传递给它。
 
-```html
+```tsx
 let list = document.querySelectorAll(".egret-player");
   let length = list.length;
   for (let i = 0; i < length; i++) {
