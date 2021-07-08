@@ -147,10 +147,89 @@ function updateAllScreens(): void {
 }
 ```
 
-## new WebPlayer
+## WebPlayer.ts
+
+新建一个WebPlayer播放器，把index.html中的div，以及创建参数传递给它。
+
+```html
+let list = document.querySelectorAll(".egret-player");
+  let length = list.length;
+  for (let i = 0; i < length; i++) {
+    let container = <HTMLDivElement>list[i];
+    let player = new WebPlayer(container, options);
+    container["egret-player"] = player;
+}
+```
+
+在WebPlayer类的构造函数中，主要做两个操作，一个是初始化，一个是监听屏幕旋转。
+
+在初始化中，会做以下几个操作：
+
+- 创建egret.Stage，并将其赋值给egret的生命周期的stage
+- 添加canvas到容器中（传入的div）
+- 实例化一个Web触摸对象 new WebTouchHandler(stage, canvas)
+- 创建Egret播放器 egret.sys.Player
+- 实例化HTMLInput
+- 更新播放器视口尺寸
+- 更新触摸数量
+- 启动Egret播放器
+
+---
+
+![runEgret](./../img/runEgret.png)
+
+## Player.ts
+
+在实例化 egret.sys.Player 时只传入一些必要的参数，实例化后如果需要显示FPS或日志的，调用其 displayFPS 方法处理。最后再开始启动播放器。
+
+在启动播放器时，根据传入的参数（index.html的data-entry-class属性）找到入口类的完整类名（比如Main.ts）并实例化，然后将其添加到舞台Stage中。
+
+至此，在浏览器中我们就能看到对应的Stage舞台和Main类中的各种组件所组成的页面了。
+
+```tsx
+public start(): void {
+  if (this.isPlaying || !this.stage) {
+    return;
+  }
+  $TempStage = $TempStage || this.stage;
+  this.isPlaying = true;
+  if (!this.root) {
+    this.initialize();
+  }
+  ticker.$addPlayer(this);//添加到心跳计时器单例中
+}
+
+private initialize(): void {
+  let rootClass;
+  if (this.entryClassName) {
+    rootClass = egret.getDefinitionByName(this.entryClassName);
+  }
+  if (rootClass) {
+    let rootContainer: any = new rootClass();//实例化
+    this.root = rootContainer;
+    if (rootContainer instanceof egret.DisplayObject) {
+      this.stage.addChild(rootContainer);
+    } else {
+      DEBUG && $error(1002, this.entryClassName);//Egret入口类 {0} 必须继承自egret.DisplayObject。
+    }
+  } else {
+    DEBUG && $error(1001, this.entryClassName);//找不到Egret入口类: {0}。
+  }
+}
+```
+
+在我们实例化入口类（Main）时，在其构造函数中，我们可添加一些监听事件，比如 **egret.Event.ADDED_TO_STAGE** 。
+
+在把入口类实例添加到舞台时，会抛出对应的事件 egret.Event.ADDED_TO_STAGE。
+
+![main](./../img/main.png)
 
 ### 参考
 
 [Using requestAnimationFrame](https://css-tricks.com/using-requestanimationframe/)
 
 [Paul Irish](https://www.paulirish.com/2011/requestanimationframe-for-smart-animating/)
+
+[egret-labs/egret-core](https://github.com/egret-labs/egret-core/blob/master/src/egret/web/WebPlayer.ts)
+
+[egret-labs/egret-core](https://github.com/egret-labs/egret-core/blob/master/src/egret/player/Player.ts)
