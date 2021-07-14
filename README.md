@@ -17,3 +17,7 @@
 [EventDispatcher](./md/EventDispatcher.md)
 
 [runEgret](./md/runEgret.md)
+
+[DisplayObject](./md/DisplayObject.md)
+
+[DisplayObjectContainer](./md/DisplayObjectContainer.md)
