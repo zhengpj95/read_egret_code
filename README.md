@@ -21,3 +21,5 @@
 [DisplayObject](./md/DisplayObject.md)
 
 [DisplayObjectContainer](./md/DisplayObjectContainer.md)
+
+[Stage](./md/Stage.md)
