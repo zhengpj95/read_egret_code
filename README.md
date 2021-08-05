@@ -29,3 +29,5 @@
 [startTick&stopTick](./md/startTick&stopTick.md)
 
 [UIComponent](./md/UIComponent.md)
+
+[eui库的createChildren方法](./md/eui库的createChildren方法.md)
