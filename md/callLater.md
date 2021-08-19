@@ -12,9 +12,9 @@
   * @language zh_CN
   */
 export function callLater(method: Function, thisObject: any, ...args): void {
-    $callLaterFunctionList.push(method);
-    $callLaterThisList.push(thisObject);
-    $callLaterArgsList.push(args);
+  $callLaterFunctionList.push(method);
+  $callLaterThisList.push(thisObject);
+  $callLaterArgsList.push(args);
 }
 ```
 

@@ -153,14 +153,14 @@ private decodeUTF8(data: Uint8Array): string {}
 对于上面的两个方法，我们既可以采用egret的实现方式，也可以使用HTML5提供的 **TextDecoder** 和 **TextEncoder** 类。只要加载egret的核心库后，重写上面的两个方法即可。
 
 ```tsx
-    let prototype: any;
-    prototype = egret.ByteArray.prototype;
-    prototype.decodeUTF8 = function (data: Uint8Array) {
-        return new TextDecoder().decode(data);
-    };
-    prototype.encodeUTF8 = function (str: string) {
-        return new TextEncoder().encode(str);
-    };
+  let prototype: any;
+  prototype = egret.ByteArray.prototype;
+  prototype.decodeUTF8 = function (data: Uint8Array) {
+    return new TextDecoder().decode(data);
+  };
+  prototype.encodeUTF8 = function (str: string) {
+    return new TextEncoder().encode(str);
+  };
 ```
 
 **注意：二进制操作字符串，对于我现阶段来说，有点糊涂，但还是要去学习的。当一个读源码的提升自己的机会。**

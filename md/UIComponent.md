@@ -104,26 +104,26 @@ function isEmptyFunction(prototype: any, key: string): boolean {
  * @param template 模板类
  */
 export function mixin(target: any, template: any): void {
-        for (let property in template) {
-            if (property != "prototype" && template.hasOwnProperty(property)) {
-                target[property] = template[property];
-            }
-        }
-        let prototype = target.prototype;
-        let protoBase = template.prototype;
-        let keys = Object.keys(protoBase);
-        let length = keys.length;
-        for (let i = 0; i < length; i++) {
-            let key = keys[i];
-            if (key == "__meta__") {
-                continue;
-            }
-            if (!prototype.hasOwnProperty(key) || isEmptyFunction(prototype, key)) {
-                let value = Object.getOwnPropertyDescriptor(protoBase, key);
-                Object.defineProperty(prototype, key, value);
-            }
-        }
+  for (let property in template) {
+    if (property != "prototype" && template.hasOwnProperty(property)) {
+      target[property] = template[property];
     }
+  }
+  let prototype = target.prototype;
+  let protoBase = template.prototype;
+  let keys = Object.keys(protoBase);
+  let length = keys.length;
+  for (let i = 0; i < length; i++) {
+    let key = keys[i];
+    if (key == "__meta__") {
+      continue;
+    }
+    if (!prototype.hasOwnProperty(key) || isEmptyFunction(prototype, key)) {
+      let value = Object.getOwnPropertyDescriptor(protoBase, key);
+      Object.defineProperty(prototype, key, value);
+    }
+  }
+}
 ```
 
 ### implementUIComponent全局方法

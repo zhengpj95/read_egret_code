@@ -48,14 +48,14 @@ EventDispatcher 中有一个 **派发一个指定参数的事件** 的方法：
 
 ```tsx
 public dispatchEventWith(type: string, bubbles?: boolean, data?: any, cancelable?: boolean): boolean {
-            if (bubbles || this.hasEventListener(type)) {
-                let event: Event = Event.create(Event, type, bubbles, cancelable);
-                event.data = data;
-                let result = this.dispatchEvent(event);
-                Event.release(event);
-                return result;
-            }
-            return true;
+  if (bubbles || this.hasEventListener(type)) {
+    let event: Event = Event.create(Event, type, bubbles, cancelable);
+    event.data = data;
+    let result = this.dispatchEvent(event);
+    Event.release(event);
+    return result;
+  }
+  return true;
 }
 ```
 
@@ -79,8 +79,8 @@ export interface EventBin {
 
 ```tsx
 let eventBin: sys.EventBin = {
-                type: type, listener: listener, thisObject: thisObject, priority: priority,
-                target: this, useCapture: useCapture, dispatchOnce: !!dispatchOnce
+  type: type, listener: listener, thisObject: thisObject, priority: priority,
+  target: this, useCapture: useCapture, dispatchOnce: !!dispatchOnce
 };
 
 let values = this.$EventDispatcher;

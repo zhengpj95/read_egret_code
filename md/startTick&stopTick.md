@@ -9,9 +9,9 @@ startTick 方法最终调用的还是 SystemTicker 下的 $startTick 方法；st
  * @param callBack 要执行的回调方法。参数 timeStamp 表示从启动Egret框架开始经过的时间(毫秒)。
  */
 export function startTick(callBack:(timeStamp:number)=>boolean,thisObject:any):void {
-    if (DEBUG && !callBack) {
-        $error(1003, "callBack");//参数 {0} 不能为 null。
-    }
-    ticker.$startTick(callBack,thisObject);
+  if (DEBUG && !callBack) {
+    $error(1003, "callBack");//参数 {0} 不能为 null。
+  }
+  ticker.$startTick(callBack,thisObject);
 }
 ```

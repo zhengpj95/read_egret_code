@@ -57,29 +57,28 @@ public static SOUND_COMPLETE: string = "soundComplete";
 注意：若使用此方法来创建自定义事件的实例，自定义的构造函数参数列表必须跟Event类一致。也就是说传入的 EventClass 是 Event 类或者其子类。
 
 ```tsx
-public static create<T extends Event>(EventClass: { new(type: string, bubbles?: boolean, cancelable?: boolean): T; eventPool?: Event[] },
-            type: string, bubbles?: boolean, cancelable?: boolean): T {
-            let eventPool: Event[];
-            let hasEventPool = (EventClass as any).hasOwnProperty("eventPool");
-            if (hasEventPool) {
-                eventPool = EventClass.eventPool;
-            }
+public static create<T extends Event>(EventClass: { new(type: string, bubbles?: boolean, cancelable?: boolean): T; eventPool?: Event[] }, type: string, bubbles?: boolean, cancelable?: boolean): T {
+  let eventPool: Event[];
+  let hasEventPool = (EventClass as any).hasOwnProperty("eventPool");
+  if (hasEventPool) {
+    eventPool = EventClass.eventPool;
+  }
 
-            if (!eventPool) {
-                eventPool = EventClass.eventPool = [];
-            }
-            if (eventPool.length) {
-                let event: T = <T>eventPool.pop();
-                event.$type = type;
-                event.$bubbles = !!bubbles;
-                event.$cancelable = !!cancelable;
-                event.$isDefaultPrevented = false;
-                event.$isPropagationStopped = false;
-                event.$isPropagationImmediateStopped = false;
-                event.$eventPhase = EventPhase.AT_TARGET;
-                return event;
-            }
-            return new EventClass(type, bubbles, cancelable);
+  if (!eventPool) {
+    eventPool = EventClass.eventPool = [];
+  }
+  if (eventPool.length) {
+    let event: T = <T>eventPool.pop();
+    event.$type = type;
+    event.$bubbles = !!bubbles;
+    event.$cancelable = !!cancelable;
+    event.$isDefaultPrevented = false;
+    event.$isPropagationStopped = false;
+    event.$isPropagationImmediateStopped = false;
+    event.$eventPhase = EventPhase.AT_TARGET;
+    return event;
+  }
+  return new EventClass(type, bubbles, cancelable);
 }
 ```
 
@@ -91,9 +90,9 @@ public static create<T extends Event>(EventClass: { new(type: string, bubbles?: 
 
 ```tsx
 public static release(event: Event): void {
-            event.clean();
-            let EventClass: any = Object.getPrototypeOf(event).constructor;
-            EventClass.eventPool.push(event);
+  event.clean();
+  let EventClass: any = Object.getPrototypeOf(event).constructor;
+  EventClass.eventPool.push(event);
 }
 ```
 

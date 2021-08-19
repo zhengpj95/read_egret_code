@@ -72,26 +72,26 @@ egret.runEgret({
 ```tsx
 function startTicker(ticker: egret.sys.SystemTicker): void {
 //使用浏览器默认的定时器
-        let requestAnimationFrame =
-            window["requestAnimationFrame"] ||
-            window["webkitRequestAnimationFrame"] ||
-            window["mozRequestAnimationFrame"] ||
-            window["oRequestAnimationFrame"] ||
-            window["msRequestAnimationFrame"];
+  let requestAnimationFrame =
+    window["requestAnimationFrame"] ||
+    window["webkitRequestAnimationFrame"] ||
+    window["mozRequestAnimationFrame"] ||
+    window["oRequestAnimationFrame"] ||
+    window["msRequestAnimationFrame"];
 
 //若不存在，则自定义
-        if (!requestAnimationFrame) {
-            requestAnimationFrame = function (callback) {
-                return window.setTimeout(callback, 1000 / 60);
-            };
-        }
+  if (!requestAnimationFrame) {
+    requestAnimationFrame = function (callback) {
+      return window.setTimeout(callback, 1000 / 60);
+    };
+  }
 
-        requestAnimationFrame(onTick);
+  requestAnimationFrame(onTick);
 
-        function onTick(): void {
-            requestAnimationFrame(onTick);//每1000/60毫秒调用一次
-            ticker.update();//执行一次刷新
-        }
+  function onTick(): void {
+    requestAnimationFrame(onTick);//每1000/60毫秒调用一次
+    ticker.update();//执行一次刷新
+  }
 }
 ```
 
@@ -99,9 +99,9 @@ function startTicker(ticker: egret.sys.SystemTicker): void {
 
 ```tsx
 if (options.screenAdapter) {
-egret.sys.screenAdapter = options.screenAdapter;
+  egret.sys.screenAdapter = options.screenAdapter;
 } else if (!egret.sys.screenAdapter) {
-        egret.sys.screenAdapter = new egret.sys.DefaultScreenAdapter();
+  egret.sys.screenAdapter = new egret.sys.DefaultScreenAdapter();
 }
 ```
 
@@ -113,7 +113,7 @@ let length = list.length;
 for (let i = 0; i < length; i++) {
 let container = <HTMLDivElement>list[i];
 let player = new WebPlayer(container, options);//创建webplayer
-        container["egret-player"] = player;//重写egret-player的DIV
+container["egret-player"] = player;//重写egret-player的DIV
 }
 ```
 
@@ -122,28 +122,28 @@ let player = new WebPlayer(container, options);//创建webplayer
 ```tsx
 let resizeTimer: number = NaN;
 function doResize() {
-        resizeTimer = NaN;
-egret.updateAllScreens();
+  resizeTimer = NaN;
+  egret.updateAllScreens();
 }
 window.addEventListener("resize", function () {
-    if (isNaN(resizeTimer)) {
- resizeTimer = window.setTimeout(doResize, 300);
-    }
+  if (isNaN(resizeTimer)) {
+    resizeTimer = window.setTimeout(doResize, 300);
+  }
 });
 
 //刷新所有Egret播放器的显示区域尺寸。仅当使用外部JavaScript代码动态修改了Egret容器大小时，需要手动调用此方法刷新显示区域。
 //当网页尺寸发生改变时此方法会自动被调用。(监听了window的resize属性)
 function updateAllScreens(): void {
-        if (!isRunning) {
-            return;
-        }
-        let containerList = document.querySelectorAll(".egret-player");
-        let length = containerList.length;
-        for (let i = 0; i < length; i++) {
-            let container = containerList[i];
-            let player = <WebPlayer>container["egret-player"];
-            player.updateScreenSize();
-        }
+  if (!isRunning) {
+    return;
+  }
+  let containerList = document.querySelectorAll(".egret-player");
+  let length = containerList.length;
+  for (let i = 0; i < length; i++) {
+    let container = containerList[i];
+    let player = <WebPlayer>container["egret-player"];
+    player.updateScreenSize();
+  }
 }
 ```
 
